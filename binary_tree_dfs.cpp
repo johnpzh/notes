@@ -5,16 +5,16 @@
 // https://www.enjoyalgorithms.com/blog/iterative-binary-tree-traversals-using-stack
 
 struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    int val_;
+    TreeNode *left_;
+    TreeNode *right_;
+    TreeNode() : val_(0), left_(nullptr), right_(nullptr) {}
+    TreeNode(int x) : val_(x), left_(nullptr), right_(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val_(x), left_(left), right_(right) {}
 };
 
 void process(TreeNode *node) {
-    printf(" %d", node->val);
+    printf(" %d", node->val_);
 }
 
 // Preorder
@@ -24,8 +24,8 @@ void preorder(TreeNode *root) {
     }
     
     process(root);
-    preorder(root->left);
-    preorder(root->right);
+    preorder(root->left_);
+    preorder(root->right_);
 }
 
 void preorder_iterative(TreeNode *root) {
@@ -35,8 +35,8 @@ void preorder_iterative(TreeNode *root) {
     while (!stack.empty() || curr) {
         if (curr) {
             process(curr);
-            stack.push_back(curr->right);
-            curr = curr->left;
+            stack.push_back(curr->right_);
+            curr = curr->left_;
         } else {
             curr = stack.back();
             stack.pop_back();
@@ -50,9 +50,9 @@ void inorder(TreeNode *root) {
         return;
     }
     
-    inorder(root->left);
+    inorder(root->left_);
     process(root);
-    inorder(root->right);
+    inorder(root->right_);
 }
 
 void inorder_iterative(TreeNode *root) {
@@ -62,12 +62,12 @@ void inorder_iterative(TreeNode *root) {
     while (!stack.empty() || curr) {
         if (curr) {
             stack.push_back(curr);
-            curr = curr->left;
+            curr = curr->left_;
         } else {
             curr = stack.back();
             stack.pop_back();
             process(curr);
-            curr = curr->right;
+            curr = curr->right_;
         }
     }
 }
@@ -78,8 +78,8 @@ void postorder(TreeNode *root) {
         return;
     }
     
-    postorder(root->left);
-    postorder(root->right);
+    postorder(root->left_);
+    postorder(root->right_);
     process(root);
 }
 
@@ -90,11 +90,11 @@ void postorder_iterative(TreeNode *root) {
     while (!stack.empty() || curr) {
         if (curr) {
             stack.push_back(curr);
-            curr = curr->left;
+            curr = curr->left_;
         } else {
             TreeNode *peek = stack.back(); // Only peek the top, not pop
-            if (peek->right && peek->right != last) {
-                curr = peek->right; // Here to update curr
+            if (peek->right_ && peek->right_ != last) {
+                curr = peek->right_; // Here to update curr
             } else {
                 stack.pop_back(); // Pop and process
                 process(peek);
@@ -121,16 +121,16 @@ void postorder_iterative(TreeNode *root) {
 int main(int argc, char *argv[]) {
     TreeNode *tree = new TreeNode[9];
     for (int i = 0; i < 9; ++i) {
-        tree[i].val = i + 1;
+        tree[i].val_ = i + 1;
     }
-    tree[0].left = tree + 1;
-    tree[0].right = tree + 5;
-    tree[1].left = tree + 2;
-    tree[1].right = tree + 3;
-    tree[3].left = tree + 4;
-    tree[5].left = tree + 6;
-    tree[5].right = tree + 8;
-    tree[6].left = tree + 7;
+    tree[0].left_ = tree + 1;
+    tree[0].right_ = tree + 5;
+    tree[1].left_ = tree + 2;
+    tree[1].right_ = tree + 3;
+    tree[3].left_ = tree + 4;
+    tree[5].left_ = tree + 6;
+    tree[5].right_ = tree + 8;
+    tree[6].left_ = tree + 7;
     
     preorder(tree); printf("\n");
     preorder_iterative(tree); printf("\n");
